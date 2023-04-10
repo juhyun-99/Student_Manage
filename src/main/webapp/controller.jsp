@@ -16,40 +16,40 @@
 	String command = request.getParameter("command");
 	session.setAttribute("list", studentDAO.getAllStudent());
 	
-	if(session.getAttribute("mnum") == null) {
-		if(request.getMethod().equals("GET")){
-			pageContext.forward(viewPath + "StudentManage.jsp");
-		}
-		else if(request.getMethod().equals("POST")){
-			String mnum = request.getParameter("mnum");
-			session.setAttribute("mnum", mnum);
-			if(mnum!=null){
-				if(mnum.equals("1")){
-					pageContext.forward(viewPath + "StudentInsert.jsp");
-				}
-				else if(mnum.equals("2")){
-					session.setAttribute("student", null);
-					pageContext.forward(viewPath + "StudentList.jsp");
-				}
-				else if(mnum.equals("3")){
-					pageContext.forward(viewPath + "StudentScoreChange.jsp");
-				}
-				else if(mnum.equals("4")){
-					pageContext.forward(viewPath + "StudentDelete.jsp");
-				}
-				else if(mnum.equals("5")){
-					pageContext.forward(viewPath + "StudentEnd.jsp");
-				}
-				else{
-					pageContext.forward(viewPath + "StudentManage.jsp");
-				}
+
+	if(request.getMethod().equals("GET")){
+		pageContext.forward(viewPath + "StudentManage.jsp");
+	}
+	else if(command == null && request.getMethod().equals("POST")){
+		String mnum = request.getParameter("mnum");
+		session.setAttribute("mnum", mnum);
+		if(mnum!=null){
+			if(mnum.equals("1")){
+				pageContext.forward(viewPath + "StudentInsert.jsp");
+			}
+			else if(mnum.equals("2")){
+				session.setAttribute("student", null);
+				pageContext.forward(viewPath + "StudentList.jsp");
+			}
+			else if(mnum.equals("3")){
+				pageContext.forward(viewPath + "StudentScoreChange.jsp");
+			}
+			else if(mnum.equals("4")){
+				pageContext.forward(viewPath + "StudentDelete.jsp");
+			}
+			else if(mnum.equals("5")){
+				pageContext.forward(viewPath + "StudentEnd.jsp");
 			}
 			else{
-				response.sendRedirect("controller.jsp");
+				pageContext.forward(viewPath + "StudentManage.jsp");
 			}
 		}
-		
+		else{
+			response.sendRedirect("controller.jsp");
+		}
 	}
+	
+	
 	
 	else if(command != null && command.equals("studentInsert")){ //1. 학생 정보 입력
 			StudentDO sDO = new StudentDO();
